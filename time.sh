@@ -10,12 +10,12 @@ time_check () {
         second_min=$4
 	if [ $second_min -lt $first_min ]
                 then
-                second_min=$((60+second_min))
+                second_min=$((60+10#$second_min))
                 second_hour=$((second_hour-1))
         fi
         if [ $second_hour -lt $first_hour ]
                 then
-                second_hour=$((24+second_hour))
+                second_hour=$((24+10#$second_hour))
         fi
         hour=$((second_hour-first_hour))
         min=$((second_min-first_min))
