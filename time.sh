@@ -44,8 +44,7 @@ fin_hour=`echo $k | awk '{print $5}' | awk -F":" '{print $1}'`
 fin_min=`echo $k | awk '{print $5}' | awk -F":" '{print $2}'`
 
 #This section parses the current time of the server
-#c=`date`
-c="Apr 21, 2018 00:06:44 PM"
+c=`date`
 cur_hour=`echo $c | awk '{print $4}' | awk -F":" '{print $1}'`
 cur_min=`echo $c | awk '{print $4}' | awk -F":" '{print $2}'`
 
