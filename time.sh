@@ -29,7 +29,7 @@ time_check () {
                 then
                 echo "The process is taking more than 2:15 hours and current execution time is $hour:$min"
         else
-                echo "The process execution hour or the cureent script execution time is $hour:$min"
+                echo "The current script execution time is $hour:$min"
         fi
 }
 
@@ -55,7 +55,9 @@ a=`echo $?`
 if [ $a -gt 0 ]
 	then
 	time_check $start_hour $start_min $cur_hour $cur_min
+        echo "process execution is not complete"
 else
  	time_check $start_hour $start_min $fin_hour $fin_min
+        echo "process execution is complete"
 fi
 
