@@ -11,20 +11,20 @@ time_check () {
 	if [ $second_min -lt $first_min ]
                 then
                 second_min=$((60+10#$second_min))
-                second_hour=$((second_hour-1))
+                second_hour=$((10#$second_hour-1))
         fi
         if [ $second_hour -lt $first_hour ]
                 then
                 second_hour=$((24+10#$second_hour))
         fi
-        hour=$((second_hour-first_hour))
-        min=$((second_min-first_min))
+        hour=$((10#$second_hour - 10#$first_hour))
+        min=$((10#$second_min - 10#$first_min))
         if [ $min -gt 60 ]
                 then
-                min=$((min-60))
-                hour=$((hour+1))
+                min=$((10#$min-60))
+                hour=$((10#$hour+1))
         fi
-        res=$(((hour*60)+min))
+        res=$(((10#$hour*60)+10#$min))
         if [ $res -gt 135 ]
                 then
                 echo "The process is taking more than 2:15 hours and current execution time is $hour:$min"
@@ -34,12 +34,12 @@ time_check () {
 }
 
 #This is the section in which we are parsing the first curl command which gives output start time
-b="Started: Apr 21, 2018 11:34:44 PM" #{first curl}
+b="Started: Apr 21, 2018 12:30:44 PM" #{first curl}
 start_hour=`echo $b | awk '{print $5}' | awk -F":" '{print $1}'`
 start_min=`echo $b | awk '{print $5}' | awk -F":" '{print $2}'`
 
 #This is the section in which we are parsing the second curl command which gives output finish time
-k="Finished: Apr 21, 2018 2:26:44 PM" #{second curl}
+k="Finished: Apr 21, 2018 13:55:44 PM" #{second curl}
 fin_hour=`echo $k | awk '{print $5}' | awk -F":" '{print $1}'`
 fin_min=`echo $k | awk '{print $5}' | awk -F":" '{print $2}'`
 
@@ -51,7 +51,7 @@ cur_min=`echo $c | awk '{print $4}' | awk -F":" '{print $2}'`
 #checks whether the process finished execution or not
 curl localhost &> /dev/null #{second curl}
 a=`echo $?`
-if [ $a -gt 0 ]
+if [ $a -lt 0 ]
 	then
 	time_check $start_hour $start_min $cur_hour $cur_min
         echo "process execution is not complete"
